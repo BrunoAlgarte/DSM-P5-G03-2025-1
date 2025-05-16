@@ -2,18 +2,16 @@ import React, { useState } from "react";
 import {
   Image,
   StyleSheet,
-  Platform,
   TextInput,
-  Button,
   Alert,
   View,
+  TouchableOpacity,
+  Text,
+  ScrollView,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import { Picker } from "@react-native-picker/picker";
-
-import { HelloWave } from "@/components/HelloWave";
-import ParallaxScrollView from "@/components/ParallaxScrollView";
-import { ThemedText } from "@/components/ThemedText";
-import { ThemedView } from "@/components/ThemedView";
 
 export default function HomeScreen() {
   const [position, setPosition] = useState("");
@@ -26,118 +24,181 @@ export default function HomeScreen() {
   };
 
   return (
-    <ThemedView>
-      <ThemedView style={styles.headerContainer}>
-        <Image
-          source={require("@/assets/images/logo1.png")}
-          style={styles.mainLogo}
-        />
-      </ThemedView>
-      <ThemedView style={styles.titleContainer}>
-        <ThemedText type="title" style={styles.title}>
-          HOOP VISION
-        </ThemedText>
-      </ThemedView>
-      <ThemedView style={styles.inputContainer}>
-        <View style={styles.pickerContainer}>
-          <Picker
-            selectedValue={position}
-            onValueChange={(itemValue) => setPosition(itemValue)}
-            style={styles.picker}
-          >
-            <Picker.Item label="Selecione a posição" value="" />
-            <Picker.Item label="Armador" value="armador" />
-            <Picker.Item label="Ala-Armador" value="ala-armador" />
-            <Picker.Item label="Ala" value="ala" />
-            <Picker.Item label="Ala-Pivô" value="ala-pivô" />
-            <Picker.Item label="Pivô" value="pivô" />
-          </Picker>
+    <KeyboardAvoidingView
+      style={{ flex: 1, backgroundColor: "#181d27" }}
+      behavior={Platform.OS === "ios" ? "padding" : undefined}
+    >
+      <ScrollView
+        contentContainerStyle={{ flexGrow: 1, justifyContent: "center" }}
+        keyboardShouldPersistTaps="handled"
+      >
+        <View style={styles.headerContainer}>
+          <Image
+            source={require("@/assets/images/logo1.png")}
+            style={styles.mainLogo}
+          />
         </View>
-        <TextInput
-          style={styles.input}
-          placeholder="Pontos"
-          keyboardType="numeric"
-          value={points}
-          onChangeText={setPoints}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Rebotes"
-          keyboardType="numeric"
-          value={rebounds}
-          onChangeText={setRebounds}
-        />
-        <TextInput
-          style={styles.input}
-          placeholder="Assistências"
-          keyboardType="numeric"
-          value={assists}
-          onChangeText={setAssists}
-        />
-        <Button title="Enviar" color={'#e46827'} onPress={handleSubmit} />
-      </ThemedView>
-    </ThemedView>
+        <View style={styles.titleContainer}>
+          <Text style={styles.title}>HOOP VISION</Text>
+          <Text style={styles.subtitle}>Registre suas estatísticas do jogo</Text>
+        </View>
+        <View style={styles.formWrapper}>
+          <View style={styles.inputContainer}>
+            <View style={styles.pickerContainer}>
+              <Picker
+                selectedValue={position}
+                onValueChange={(itemValue) => setPosition(itemValue)}
+                style={styles.picker}
+                dropdownIconColor="#e46827"
+              >
+                <Picker.Item label="Selecione a posição" value="" />
+                <Picker.Item label="Armador" value="armador" />
+                <Picker.Item label="Ala-Armador" value="ala-armador" />
+                <Picker.Item label="Ala" value="ala" />
+                <Picker.Item label="Ala-Pivô" value="ala-pivô" />
+                <Picker.Item label="Pivô" value="pivô" />
+              </Picker>
+            </View>
+            <TextInput
+              style={styles.input}
+              placeholder="Pontos"
+              placeholderTextColor="#bbb"
+              keyboardType="numeric"
+              value={points}
+              onChangeText={setPoints}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Rebotes"
+              placeholderTextColor="#bbb"
+              keyboardType="numeric"
+              value={rebounds}
+              onChangeText={setRebounds}
+            />
+            <TextInput
+              style={styles.input}
+              placeholder="Assistências"
+              placeholderTextColor="#bbb"
+              keyboardType="numeric"
+              value={assists}
+              onChangeText={setAssists}
+            />
+            <TouchableOpacity style={styles.sendButton} onPress={handleSubmit}>
+              <Text style={styles.sendButtonText}>Enviar</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    height: 60,
-    alignItems: "center",
-    justifyContent: "center",
-  },
-  title: {
-    height: "100%",
-    fontSize: 42,
-    fontWeight: "bold",
-    color: "#e46827",
-    textAlignVertical: "center",
-  },
-  inputContainer: {
-    padding: 16,
-    gap: 12,
-  },
-  pickerContainer: {
-    borderWidth: 1,
-    borderColor: "#ccc",
-    borderRadius: 8,
-    backgroundColor: "#fff",
-    overflow: "hidden",
-    marginBottom: 12,
-  },
-  picker: {
-    height: 60,
-    width: "100%",
-    color: "#000",
-    fontSize: 16,
-  },
-  input: {
-    height: 50,
-    borderColor: "#ccc",
-    borderWidth: 1,
-    borderRadius: 8,
-    paddingHorizontal: 8,
-    backgroundColor: "#fff",
-  },
-  stepContainer: {
-    gap: 8,
-    marginBottom: 8,
-  },
   headerContainer: {
-    height: 200,
-    marginBottom: 25,
+    height: 120,
     justifyContent: "center",
     alignItems: "center",
     backgroundColor: "#e46827",
+    borderBottomLeftRadius: 32,
+    borderBottomRightRadius: 32,
+    shadowColor: "#000",
+    shadowOpacity: 0.10,
+    shadowRadius: 8,
+    elevation: 4,
+    marginBottom: 4,
   },
   mainLogo: {
-    width: "75%",
-    height: "75%",
-    margin: 20,
-    borderRadius: 0,
+    width: 130,
+    height: 130,
     resizeMode: "contain",
   },
-  btnEviar: {
+  titleContainer: {
+    alignItems: "center",
+    marginVertical: 8,
+  },
+  title: {
+    fontSize: 36,
+    fontWeight: "bold",
+    color: "#e46827",
+    textAlign: "center",
+    letterSpacing: 2,
+    textShadowColor: "#232a38",
+    textShadowOffset: { width: 2, height: 2 },
+    textShadowRadius: 4,
+  },
+  subtitle: {
+    fontSize: 17,
+    color: "#fff",
+    marginTop: 6,
+    textAlign: "center",
+    letterSpacing: 1,
+    fontWeight: "300",
+  },
+  formWrapper: {
+    flex: 1,
+    alignItems: "center",
+    justifyContent: "center",
+  },
+  inputContainer: {
+    width: "95%",
+    maxWidth: 370,
+    backgroundColor: "#232a38",
+    borderRadius: 20,
+    padding: 28,
+    alignItems: "center",
+    shadowColor: "#000",
+    shadowOpacity: 0.10,
+    shadowRadius: 10,
+    elevation: 6,
+    marginBottom: 20,
+    gap: 18,
+  },
+  pickerContainer: {
+    width: "100%",
+    borderWidth: 1,
+    borderColor: "#e46827",
+    borderRadius: 12,
+    backgroundColor: "#1a1f2b",
+    overflow: "hidden",
+    marginBottom: 4,
+  },
+  picker: {
+    height: 52,
+    width: "100%",
+    color: "#fff",
+    fontSize: 16,
+    paddingLeft: 12,
+    paddingVertical: 0,
+    justifyContent: "center",
+  },
+  input: {
+    width: "100%",
+    height: 48,
+    backgroundColor: "#1a1f2b",
+    borderColor: "#e46827",
+    borderWidth: 1,
+    borderRadius: 12,
+    marginBottom: 4,
+    paddingHorizontal: 16,
+    color: "#fff",
+    fontSize: 16,
+  },
+  sendButton: {
+    width: "100%",
     backgroundColor: "#e46827",
-  }
+    paddingVertical: 16,
+    borderRadius: 12,
+    alignItems: "center",
+    marginTop: 10,
+    shadowColor: "#e46827",
+    shadowOpacity: 0.18,
+    shadowRadius: 6,
+    elevation: 2,
+  },
+  sendButtonText: {
+    color: "#fff",
+    fontSize: 19,
+    fontWeight: "bold",
+    letterSpacing: 1,
+  },
 });

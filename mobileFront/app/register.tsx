@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { View, TextInput, Button, StyleSheet, Text, TouchableOpacity, KeyboardAvoidingView, Platform } from "react-native";
+import { View, TextInput, StyleSheet, Text, TouchableOpacity, KeyboardAvoidingView, Platform } from "react-native";
 import { useRouter } from "expo-router";
 
-export default function Login() {
+export default function Register() {
   const [user, setUser] = useState("");
   const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const router = useRouter();
 
   return (
@@ -15,7 +16,7 @@ export default function Login() {
       <View style={styles.innerContainer}>
         <Text style={styles.logo}>🏀</Text>
         <Text style={styles.title}>Hoop Vision</Text>
-        <Text style={styles.subtitle}>Seu desempenho, no nível da liga</Text>
+        <Text style={styles.subtitle}>Crie sua conta</Text>
         <TextInput
           style={styles.input}
           placeholder="Usuário"
@@ -31,17 +32,27 @@ export default function Login() {
           onChangeText={setPassword}
           secureTextEntry
         />
-        <TouchableOpacity
-          style={styles.loginButton}
-          onPress={() => router.replace("/(tabs)")}
-        >
-          <Text style={styles.loginButtonText}>Entrar</Text>
-        </TouchableOpacity>
+        <TextInput
+          style={styles.input}
+          placeholder="Confirmar Senha"
+          placeholderTextColor="#bbb"
+          value={confirmPassword}
+          onChangeText={setConfirmPassword}
+          secureTextEntry
+        />
         <TouchableOpacity
           style={styles.registerButton}
-          onPress={() => router.replace("/register")}
+          onPress={() => {
+            // Sem ação por enquanto
+          }}
         >
           <Text style={styles.registerButtonText}>Registrar</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={styles.loginButton}
+          onPress={() => router.replace("/login")}
+        >
+          <Text style={styles.loginButtonText}>Voltar para Login</Text>
         </TouchableOpacity>
       </View>
     </KeyboardAvoidingView>
@@ -97,7 +108,7 @@ const styles = StyleSheet.create({
     color: "#fff",
     fontSize: 16,
   },
-  loginButton: {
+  registerButton: {
     width: "100%",
     backgroundColor: "#e46827",
     paddingVertical: 14,
@@ -105,13 +116,13 @@ const styles = StyleSheet.create({
     alignItems: "center",
     marginTop: 8,
   },
-  loginButtonText: {
+  registerButtonText: {
     color: "#fff",
     fontSize: 18,
     fontWeight: "bold",
     letterSpacing: 1,
   },
-  registerButton: {
+  loginButton: {
     width: "100%",
     backgroundColor: "#fff",
     paddingVertical: 14,
@@ -121,7 +132,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: "#e46827",
   },
-  registerButtonText: {
+  loginButtonText: {
     color: "#e46827",
     fontSize: 16,
     fontWeight: "bold",
